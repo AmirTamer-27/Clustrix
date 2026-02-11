@@ -4,46 +4,84 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.cluster import KMeans
+import os
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import silhouette_score
 #Add the validation function here , keep only the important function if it exists
 
 import pandas as pd
 
-def validate(filePath):
-    # Load dataset
-    df = pd.read_csv(filePath)
+import pandas as pd
 
-    # Normalize column names (lowercase, no spaces)
+def read_and_merge_excel(file_path):
+    # Load Excel file
+    xls = pd.ExcelFile(file_path)
+
+    # Read all sheets into a dictionary
+    sheets_dict = pd.read_excel(xls, sheet_name=None)
+
+    # Convert dict of DataFrames to list
+    dataframes = list(sheets_dict.values())
+
+    # Concatenate all sheets into one large DataFrame
+    merged_df = pd.concat(dataframes, ignore_index=True)
+
+    return merged_df
+
+def validate(filePath):
+    import os
+    import pandas as pd
+
+    # Load dataset
+    _, ext = os.path.splitext(filePath)
+
+    if ext.lower() in [".xlsx", ".xls"]:
+        df = read_and_merge_excel(filePath)
+    else:
+        df = pd.read_csv(filePath)
+
+    # Normalize column names
     df.columns = [col.strip().lower().replace(" ", "") for col in df.columns]
 
-    # Possible aliases for each required field
     required_columns = {
         "Quantity": ["quantity", "qty"],
-        "UnitPrice": ["unitprice", "price"],
-        "InvoiceNo": ["invoiceno", "invoice", "invoicenumber"],
-        "CustomerID": ["customerid", "customer"],
-        "InvoiceDate": ["invoicedate", "date"]
+        "UnitPrice": ["unitprice", "price", "sellingprice"],
+        "InvoiceNo": ["invoiceno", "invoice", "invoicenumber", "orderno"],
+        "CustomerID": ["customerid", "customer", "companyname"],
+        "InvoiceDate": ["invoicedate", "date", "orderdate"],
     }
 
     column_mapping = {}
 
-    # Try to find each required field
     for standard_name, aliases in required_columns.items():
         found = False
+
         for col in df.columns:
             if col in aliases:
                 column_mapping[col] = standard_name
                 found = True
                 break
+
+        # Special rule for Quantity
+        if not found and standard_name == "Quantity":
+            df["Quantity"] = 1
+            found = True
+
         if not found:
             raise ValueError(f"Missing required column similar to: {standard_name}")
 
-    # Keep only required columns and rename them
-    df = df[list(column_mapping.keys())]
+    # Keep only required columns + newly created Quantity if needed
+    existing_cols = list(column_mapping.keys())
+
+    # Add Quantity manually if it was created
+    if "Quantity" in df.columns and "Quantity" not in column_mapping.values():
+        existing_cols.append("Quantity")
+
+    df = df[existing_cols]
     df = df.rename(columns=column_mapping)
 
     return df
+
 
 def analyze (filePath):
     #Data cleaning
@@ -71,8 +109,9 @@ def analyze (filePath):
     )
 
     #Calculating RFM
+    dataset["RawCost"] = dataset["Quantity"] * dataset['UnitPrice']
     dataset["transactionCost"] = dataset["Quantity_c"] * dataset['UnitPrice_c']
-    cashInflow = dataset["transactionCost"].sum()
+    cashInflow = dataset["RawCost"].sum()
     totalTransactions = dataset["InvoiceNo"].nunique()
     dataset["formatedDate"] = pd.to_datetime(dataset["InvoiceDate"])
     sortedDataset = dataset.sort_values(by="formatedDate" , ascending=False)

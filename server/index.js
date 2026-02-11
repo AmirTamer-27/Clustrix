@@ -1,16 +1,23 @@
 const express = require('express')
 const app = express()
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
 const { spawn } = require("child_process");
 const fs = require("fs");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    },
+});
+const upload = multer({ storage: storage })
 
 const cors = require('cors')
 
 app.use(cors())
 
 app.post('/analyze', upload.single('dataset'), (req, res) => {
-    console.log("HIT ROUTE")
     if (req.file) {
         console.log("File recieved")
         const filePath = req.file.path
@@ -38,7 +45,6 @@ app.post('/analyze', upload.single('dataset'), (req, res) => {
             }
 
             const parsedResult = JSON.parse(result);
-            console.log(parsedResult)
             return res.status(200).send(parsedResult);
         });
 
@@ -50,9 +56,7 @@ app.post('/analyze', upload.single('dataset'), (req, res) => {
 })
 
 app.post('/segment', upload.single('dataset'), (req, res) => {
-    console.log("ROUTE HIT")
     if (req.file && req.body.k) {
-        console.log("FILE RECIEVED")
         const k = parseInt(req.body.k)
         if (isNaN(k)) {
             return res.status(400).send("K must be a number");
@@ -86,7 +90,6 @@ app.post('/segment', upload.single('dataset'), (req, res) => {
             }
 
             const parsedResult = JSON.parse(result);
-            console.log(parsedResult)
             fs.unlink(filePath, () => { });
             return res.status(200).send(parsedResult);
         });
