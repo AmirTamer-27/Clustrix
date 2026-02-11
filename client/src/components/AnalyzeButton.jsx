@@ -1,8 +1,11 @@
 import Button from '@mui/material/Button';
-
+import { useNavigate } from "react-router-dom";
 export default function AnalyzeButton({ enable }) {
+    const navigate = useNavigate();
+
     return (
         <Button
+            onClick={() => navigate('/analyze')}
             variant="outlined"
             disabled={!enable}
             sx={{

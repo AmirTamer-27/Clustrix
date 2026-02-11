@@ -72,6 +72,8 @@ def analyze (filePath):
 
     #Calculating RFM
     dataset["transactionCost"] = dataset["Quantity_c"] * dataset['UnitPrice_c']
+    cashInflow = dataset["transactionCost"].sum()
+    totalTransactions = dataset["InvoiceNo"].nunique()
     dataset["formatedDate"] = pd.to_datetime(dataset["InvoiceDate"])
     sortedDataset = dataset.sort_values(by="formatedDate" , ascending=False)
     referenceDate = sortedDataset["formatedDate"].iloc[0] + pd.Timedelta(days=1)
@@ -113,10 +115,11 @@ def analyze (filePath):
         score = silhouette_score(rfm_scaled, labels)
         silhouette_scores[k] = score
     best_k = max(silhouette_scores, key=silhouette_scores.get)
-    return (best_k , rfm , rfm_scaled)
+    customerCount = rfm["CustomerID"].nunique()
+    return (best_k , rfm , rfm_scaled , customerCount , cashInflow , totalTransactions)
 
 def segment(filePath , K):
-    best_k , rfm , rfm_scaled = analyze(filePath)
+    best_k , rfm , rfm_scaled , customerCount , cashInflow , totalTransactions = analyze(filePath)
     kmeans = KMeans(n_clusters=K , random_state=42 , n_init=10)
     kmeans.fit(rfm_scaled)
     rfm["Cluster"] = kmeans.labels_
@@ -127,16 +130,16 @@ def segment(filePath , K):
     "M" : "mean"
     })
     cluster_info = cluster_info.reset_index()
-
     return (rfm , cluster_info)
 
 def main(filePath , K = False):
     if( K == False):
-        best_k , rfm , rfm_scaled = analyze(filePath)
-        return best_k
+        best_k , rfm , rfm_scaled , customerCount , cashInflow , totalTransactions = analyze(filePath)
+        return best_k , customerCount,cashInflow,totalTransactions
     else:
         rfm , cluster_info = segment(filePath , K)
-        return rfm , cluster_info
+        formatedRFM = rfm[["CustomerID" , "R" , "F" , "M" , "Cluster"]]
+        return formatedRFM , cluster_info
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -153,8 +156,8 @@ if __name__ == "__main__":
     k = args.k
     result = {}
     if k is None:
-        best_k = main(filePath)
-        result = {"k" : best_k}
+        best_k , customerCount,cashInflow,totalTransactions = main(filePath)
+        result = {"k" : best_k , "customerCount" : customerCount , "cashInflow" : cashInflow , "totalTransactions" : totalTransactions}
     else:
         rfm , cluster_info = main(filePath , k)
         result = {"customerCluster" : rfm.to_dict(orient="records") , "clusterInfo"  :cluster_info.to_dict(orient="records") }
