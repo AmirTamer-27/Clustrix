@@ -1,0 +1,136 @@
+{
+  "hash": "8fd4fa60",
+  "configHash": "ee034135",
+  "lockfileHash": "b02f1b0d",
+  "browserHash": "a18bd38a",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "e50854a2",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "955c25b3",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "43d1930b",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "b9ebf97c",
+      "needsInterop": false
+    },
+    "react-spinners": {
+      "src": "../../node_modules/react-spinners/esm/index.js",
+      "file": "react-spinners.js",
+      "fileHash": "c0f9613f",
+      "needsInterop": false
+    },
+    "@mui/material/Box": {
+      "src": "../../node_modules/@mui/material/esm/Box/index.js",
+      "file": "@mui_material_Box.js",
+      "fileHash": "e9602397",
+      "needsInterop": false
+    },
+    "@mui/material/Slider": {
+      "src": "../../node_modules/@mui/material/esm/Slider/index.js",
+      "file": "@mui_material_Slider.js",
+      "fileHash": "5ad02ef0",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "9c6ebe43",
+      "needsInterop": false
+    },
+    "@tsparticles/react": {
+      "src": "../../node_modules/@tsparticles/react/dist/index.js",
+      "file": "@tsparticles_react.js",
+      "fileHash": "fb151f43",
+      "needsInterop": false
+    },
+    "@tsparticles/slim": {
+      "src": "../../node_modules/@tsparticles/slim/browser/index.js",
+      "file": "@tsparticles_slim.js",
+      "fileHash": "31da7469",
+      "needsInterop": false
+    },
+    "@mui/material/Button": {
+      "src": "../../node_modules/@mui/material/esm/Button/index.js",
+      "file": "@mui_material_Button.js",
+      "fileHash": "d5c74940",
+      "needsInterop": false
+    },
+    "react-router": {
+      "src": "../../node_modules/react-router/dist/development/index.mjs",
+      "file": "react-router.js",
+      "fileHash": "837e8ca4",
+      "needsInterop": false
+    },
+    "papaparse": {
+      "src": "../../node_modules/papaparse/papaparse.min.js",
+      "file": "papaparse.js",
+      "fileHash": "ba1f8495",
+      "needsInterop": true
+    },
+    "@mui/material/styles": {
+      "src": "../../node_modules/@mui/material/esm/styles/index.js",
+      "file": "@mui_material_styles.js",
+      "fileHash": "484e1694",
+      "needsInterop": false
+    },
+    "@mui/icons-material/CloudUpload": {
+      "src": "../../node_modules/@mui/icons-material/esm/CloudUpload.js",
+      "file": "@mui_icons-material_CloudUpload.js",
+      "fileHash": "296939f9",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-PEXG4VAT": {
+      "file": "chunk-PEXG4VAT.js"
+    },
+    "chunk-KHMDPMNR": {
+      "file": "chunk-KHMDPMNR.js"
+    },
+    "chunk-5A5VNGTL": {
+      "file": "chunk-5A5VNGTL.js"
+    },
+    "chunk-5NY4A3DM": {
+      "file": "chunk-5NY4A3DM.js"
+    },
+    "chunk-IEUZC2NF": {
+      "file": "chunk-IEUZC2NF.js"
+    },
+    "chunk-6U5VDVRT": {
+      "file": "chunk-6U5VDVRT.js"
+    },
+    "chunk-QWK7JA5D": {
+      "file": "chunk-QWK7JA5D.js"
+    },
+    "chunk-AN55UUGQ": {
+      "file": "chunk-AN55UUGQ.js"
+    },
+    "chunk-QMLRYMS4": {
+      "file": "chunk-QMLRYMS4.js"
+    },
+    "chunk-4YSNPC3B": {
+      "file": "chunk-4YSNPC3B.js"
+    },
+    "chunk-AM4NN4A5": {
+      "file": "chunk-AM4NN4A5.js"
+    },
+    "chunk-V4OQ3NZ2": {
+      "file": "chunk-V4OQ3NZ2.js"
+    }
+  }
+}

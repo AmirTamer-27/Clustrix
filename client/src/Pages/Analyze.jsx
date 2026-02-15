@@ -61,7 +61,7 @@ export default function Analyze(props) {
                 const formData = new FormData();
                 formData.append("dataset", file);
 
-                const response = await axios.post("http://localhost:3000/analyze", formData);
+                const response = await axios.post("http://clustrix.railway.internal/analyze", formData);
 
                 setAnalyzedData(response.data);
                 setK(response.data.k);

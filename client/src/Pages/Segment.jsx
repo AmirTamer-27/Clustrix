@@ -62,7 +62,7 @@ export default function Segment(props) {
                 formData.append("dataset", file);
                 formData.append("k", k);
 
-                const response = await axios.post("http://localhost:3000/segment", formData);
+                const response = await axios.post("http://clustrix.railway.internal/segment", formData);
 
                 if (response.status === 200) {
                     setClusterInfo(response.data.clusterInfo);

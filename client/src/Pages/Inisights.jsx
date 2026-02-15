@@ -59,7 +59,7 @@ export default function Insights(props) {
             }
             try {
                 setError("");
-                const response = await axios.post("http://localhost:3000/insights", {
+                const response = await axios.post("http://clustrix.railway.internal/insights", {
                     clusterInfo
                 });
                 setInsights(response.data)
