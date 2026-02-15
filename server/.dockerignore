@@ -1,0 +1,7 @@
+node_modules
+uploads
+venv
+.git
+.env
+Pipeline/Report.xlsx
+Pipeline/online_retail.csv

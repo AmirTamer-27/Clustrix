@@ -1,8 +1,14 @@
+require("dotenv").config();
 const express = require('express')
 const app = express()
 const multer = require('multer')
+const path = require("path");
+
 const { spawn } = require("child_process");
 const fs = require("fs");
+const { generateInsights } = require("./utils.js");
+const pythonScript = path.join(__dirname, "Pipeline", "rfm.py");
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "uploads/");
@@ -16,13 +22,13 @@ const upload = multer({ storage: storage })
 const cors = require('cors')
 
 app.use(cors())
+app.use(express.json())
 
 app.post('/analyze', upload.single('dataset'), (req, res) => {
     if (req.file) {
-        console.log("File recieved")
         const filePath = req.file.path
-        const pythonProcess = spawn("python", [
-            "../Pipeline/rfm.py",
+        const pythonProcess = spawn("python3", [
+            pythonScript,
             "--file",
             filePath
 
@@ -65,8 +71,8 @@ app.post('/segment', upload.single('dataset'), (req, res) => {
             return res.status(400).send("K must be at least 2");
         }
         const filePath = req.file.path
-        const pythonProcess = spawn("python", [
-            "../Pipeline/rfm.py",
+        const pythonProcess = spawn("python3", [
+            pythonScript,
             "--file",
             filePath,
             "--k",
@@ -99,9 +105,14 @@ app.post('/segment', upload.single('dataset'), (req, res) => {
     }
 })
 
+app.post('/insights', async (req, res) => {
+    const { clusterInfo } = req.body
+    const response = await generateInsights(clusterInfo)
+    res.send(JSON.parse(response))
 
+})
+const PORT = process.env.PORT || 3000;
 
-
-app.listen(3000, () => {
-    console.log("Listening on port 3000")
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })
