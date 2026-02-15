@@ -1,11 +1,21 @@
 import Background from "./components/Background"
-import { useState } from "react"
-import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { Routes, Route, useLocation } from "react-router-dom";
 import Analyze from "./Pages/Analyze";
 import Segment from "./Pages/Segment";
 import Insights from "./Pages/Inisights";
 
 import Home from "./Pages/Home"
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+
+  return null;
+}
 
 function RouteErrorMessage({ title, message }) {
   return (
@@ -46,6 +56,7 @@ function App() {
   const [clusterInfo, setClusterInfo] = useState(null)
   return (
     <>
+      <ScrollToTop />
       <Background />
       <Routes>
         <Route path="/" element={<Home setFile={setFile} />} />

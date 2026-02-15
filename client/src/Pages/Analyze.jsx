@@ -133,40 +133,44 @@ export default function Analyze(props) {
                 </FloatIn>
 
                 <Box sx={innerWrapperStyle}>
-                    <FloatIn delay={0.25}>
-                        <Box sx={analyzeLeftCardStyle}>
-                            <div>
-                                <p style={smallLabelStyle}>Adjust Cluster Count</p>
-                                <h1 style={gradientTitleStyle}>K = {k}</h1>
-                                <p style={sectionDescriptionStyle}>
-                                    Increasing K creates more granular segments. Lower values produce broader
-                                    customer groups.
-                                </p>
-                            </div>
+                    <Box sx={{ flex: 1, display: "flex", "& > *": { width: "100%", display: "flex" } }}>
+                        <FloatIn delay={0.25}>
+                            <Box sx={analyzeLeftCardStyle}>
+                                <div>
+                                    <p style={smallLabelStyle}>Adjust Cluster Count</p>
+                                    <h1 style={gradientTitleStyle}>K = {k}</h1>
+                                    <p style={sectionDescriptionStyle}>
+                                        Increasing K creates more granular segments. Lower values produce broader
+                                        customer groups.
+                                    </p>
+                                </div>
 
-                            <div style={analyzeSliderSectionStyle}>
-                                <p style={smallLabelStyle}>Adjust Cluster Count</p>
+                                <div style={analyzeSliderSectionStyle}>
+                                    <p style={smallLabelStyle}>Adjust Cluster Count</p>
 
-                                <Slider
-                                    min={2}
-                                    max={10}
-                                    value={k}
-                                    onChange={(e) => setK(e.target.value)}
-                                    sx={clusterSliderStyle}
-                                />
+                                    <Slider
+                                        min={2}
+                                        max={10}
+                                        value={k}
+                                        onChange={(e) => setK(e.target.value)}
+                                        sx={clusterSliderStyle}
+                                    />
 
-                                <Box sx={segmentButtonWrapperStyle}>
-                                    <SegmentButton />
-                                </Box>
-                            </div>
-                        </Box>
-                    </FloatIn>
+                                    <Box sx={segmentButtonWrapperStyle}>
+                                        <SegmentButton />
+                                    </Box>
+                                </div>
+                            </Box>
+                        </FloatIn>
+                    </Box>
 
-                    <FloatIn delay={0.4}>
-                        <Box sx={analyzeRightCardStyle}>
-                            <InfoCard title="Analysis Result" formattedData={analyzedDataF} />
-                        </Box>
-                    </FloatIn>
+                    <Box sx={{ flex: 1, display: "flex", "& > *": { width: "100%", display: "flex" } }}>
+                        <FloatIn delay={0.4}>
+                            <Box sx={analyzeRightCardStyle}>
+                                <InfoCard title="Analysis Result" formattedData={analyzedDataF} />
+                            </Box>
+                        </FloatIn>
+                    </Box>
                 </Box>
             </Box>
         </>

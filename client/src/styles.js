@@ -9,6 +9,7 @@ export const containerStyle = {
 
 export const innerWrapperStyle = {
     display: "flex",
+    alignItems: "stretch",
     gap: "40px",
     width: "100%",
     maxWidth: "1100px",
@@ -239,6 +240,8 @@ export const insightsPrimaryButtonStyle = {
 
 export const analyzeLeftCardStyle = {
     ...cardStyle,
+    width: "100%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -269,6 +272,8 @@ export const segmentButtonWrapperStyle = {
 
 export const analyzeRightCardStyle = {
     ...cardStyle,
+    width: "100%",
+    height: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
